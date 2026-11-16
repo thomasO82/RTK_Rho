@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
 import Categories from './Categories/Categories'
 import Recipes from './Recipes/Recipes'
 import './home.css'
 
-export default function Home() {
+export default function Home({ search, setSearch }) {
   const [category, setCategory] = useState('Beef')
-  const { search, setSearch } = useOutletContext()
   const term = search.trim()
 
   const changeCategory = (category) => {
@@ -16,7 +14,10 @@ export default function Home() {
 
   return (
     <section>
-      <Categories categoryProp={term ? '' : category} setCategory={changeCategory} />
+      <Categories
+        categoryProp={term ? '' : category}
+        setCategory={changeCategory}
+      />
       <Recipes category={category} search={term} />
     </section>
   )
