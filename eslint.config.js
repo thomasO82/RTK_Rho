@@ -48,7 +48,7 @@ export default [
   },
   {
     files: [
-      'src/pages/home/Home.jsx',
+      'src/pages/home/Recipes/Recipes.jsx',
       'src/pages/Recipe/RecipeDetails.jsx',
       'src/pages/home/Recipes/RecipeModal.jsx',
     ],
