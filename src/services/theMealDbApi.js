@@ -1,11 +1,23 @@
+import axios from 'axios'
+
 const baseUrl = 'https://www.themealdb.com/api/json/v1/1/'
 
-export async function requestMeals(endpoint, params = {}, signal) {
-  const response = await fetch(baseUrl + endpoint + '?' + new URLSearchParams(params), { signal })
-  if (!response.ok) throw new Error('TheMealDB : erreur HTTP ' + response.status)
-  return response.json()
+export async function getCategories() {
+  const response = await axios.get(baseUrl + 'categories.php')
+  return response.data
 }
-export const getCategories = (signal) => requestMeals('categories.php', {}, signal)
-export const getRecipesBySearch = (search, signal) => requestMeals('search.php', { s: search }, signal)
-export const getRecipesByCategory = (category, signal) => requestMeals('filter.php', { c: category }, signal)
-export const getRecipeById = (id, signal) => requestMeals('lookup.php', { i: id }, signal)
+
+export async function getRecipesBySearch(search) {
+  const response = await axios.get(baseUrl + 'search.php', { params: { s: search } })
+  return response.data
+}
+
+export async function getRecipesByCategory(category) {
+  const response = await axios.get(baseUrl + 'filter.php', { params: { c: category } })
+  return response.data
+}
+
+export async function getRecipeById(id) {
+  const response = await axios.get(baseUrl + 'lookup.php', { params: { i: id } })
+  return response.data
+}

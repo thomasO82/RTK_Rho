@@ -1,22 +1,22 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import axios from 'axios'
 import { getRecipesBySearch, getRecipeById } from '../src/services/theMealDbApi.js'
 
-test('encode les recherches, transmet le signal et conserve les résultats vides', async () => {
-  const original = globalThis.fetch
-  const controller = new AbortController()
-  globalThis.fetch = async (url, options) => {
-    assert.equal(new URL(url).searchParams.get('s'), 'fish & chips')
-    assert.equal(options.signal, controller.signal)
-    return { ok: true, json: async () => ({ meals: null }) }
+test('Axios reçoit les paramètres de recherche et retourne les données', async () => {
+  const original = axios.get
+  axios.get = async (url, options) => {
+    assert.equal(url, 'https://www.themealdb.com/api/json/v1/1/search.php')
+    assert.deepEqual(options, { params: { s: 'fish & chips' } })
+    return { data: { meals: null } }
   }
-  try { assert.deepEqual(await getRecipesBySearch('fish & chips', controller.signal), { meals: null }) }
-  finally { globalThis.fetch = original }
+  try { assert.deepEqual(await getRecipesBySearch('fish & chips'), { meals: null }) }
+  finally { axios.get = original }
 })
 
-test('une erreur HTTP ne devient pas un résultat vide', async () => {
-  const original = globalThis.fetch
-  globalThis.fetch = async () => ({ ok: false, status: 503 })
+test('une erreur Axios reste une erreur', async () => {
+  const original = axios.get
+  axios.get = async () => { throw new Error('Request failed with status code 503') }
   try { await assert.rejects(getRecipeById('42'), /503/) }
-  finally { globalThis.fetch = original }
+  finally { axios.get = original }
 })

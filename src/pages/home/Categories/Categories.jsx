@@ -1,10 +1,20 @@
-import { useGetCategoriesQuery } from '../../../hooks/useMeals'
+import { useEffect, useState } from 'react'
+import { getCategories } from '../../../services/theMealDbApi'
 
 export default function Categories({ categoryProp, setCategory }) {
-  const result = useGetCategoriesQuery()
-  if (result.isLoading) return <p role="status">Chargement des catégories...</p>
-  if (result.isError) return <p role="alert">{result.error.message}</p>
-  const categories = result.data?.categories ?? []
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    let active = true
+    getCategories()
+      .then((data) => { if (active) setCategories(data.categories ?? []) })
+      .catch((error) => { if (active) setError(error) })
+      .finally(() => { if (active) setLoading(false) })
+    return () => { active = false }
+  }, [])
+  if (loading) return <p role="status">Chargement des catégories...</p>
+  if (error) return <p role="alert">{error.message}</p>
   if (!categories.length) return <p>Aucune catégorie trouvée.</p>
   return (
     <ul id="categories">

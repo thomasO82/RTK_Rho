@@ -1,13 +1,28 @@
 import { Link, useParams } from 'react-router-dom'
 import useToggle from '@hooks/useToggle'
 import Recipe from '../../components/Recipe/Recipe'
-import { useGetRecipeByIdQuery } from '../../hooks/useMeals'
+import { useEffect, useState } from 'react'
+import { getRecipeById } from '../../services/theMealDbApi'
 import './recipeDetails.css'
 
 export default function RecipeDetails() {
   const { idRecipe } = useParams()
   const { toggle, handleToggle } = useToggle(false)
-  const result = useGetRecipeByIdQuery(idRecipe)
+  const [result, setResult] = useState({ isLoading: true })
+  useEffect(() => {
+    let active = true
+    async function loadRecipe() {
+      setResult({ isLoading: true })
+      try {
+        const data = await getRecipeById(idRecipe)
+        if (active) setResult({ data })
+      } catch (error) {
+        if (active) setResult({ error, isError: true })
+      }
+    }
+    loadRecipe()
+    return () => { active = false }
+  }, [idRecipe])
   if (result.isLoading) return <p role="status">Chargement de la recette...</p>
   if (result.isError) return <p role="alert">{result.error.message}</p>
   const recipe = result.data?.meals?.[0]
