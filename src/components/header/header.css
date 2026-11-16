@@ -80,3 +80,10 @@ main{
         padding: 1rem;
     }
 }
+
+@media screen and (max-width:600px) {
+    header form {
+        width:calc(100% - 2rem);
+        min-width:0;
+    }
+}
