@@ -21,10 +21,6 @@ export async function getRecipesByCategory(category) {
   return response.data
 }
 export async function getRecipeById(id) {
-  const response = await axios.get(baseUrl + 'lookup.php', {
-    params: {
-      i: id,
-    },
-  })
+  const response = await axios.get(baseUrl + 'lookup.php', { params: { i: id } })
   return response.data
 }
