@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -71,3 +71,19 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 
+
+* { box-sizing: border-box; }
+input { max-width: 100%; font: inherit; }
+#categories button { background: transparent; color: inherit; padding: 0; }
+.modalContent form { flex-wrap: wrap; }
+.modalContent label { display: flex; flex-direction: column; gap: .5rem; }
+.modalContent { max-width: calc(100vw - 2rem); max-height: 90vh; overflow: auto; }
+@media (max-width: 600px) {
+  header nav { right: 1rem; }
+  header nav ul { gap: 1rem; padding: 0; }
+  header form { width: calc(100% - 2rem); }
+  main > section #categories { padding: 1rem; border-radius: 1rem; }
+  #recipe { flex-direction: column; }
+  #recipe > img, #recipe > aside { width: 100%; }
+  .fc .fc-header-toolbar { flex-wrap: wrap; gap: .5rem; }
+}

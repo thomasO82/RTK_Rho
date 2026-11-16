@@ -1,32 +1,21 @@
-import { useEffect, useState } from "react"
-import Categories from "./Categories/Categories"
-import "./home.css"
-import Recipes from "./Recipes/recipes"
-import { useOutletContext } from "react-router-dom"
-import { useGetRecipesByCategoryQuery } from "../../services/theMealDbApi"
+import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import Categories from './Categories/Categories'
+import Recipes from './Recipes/Recipes'
+import { useGetRecipesByCategoryQuery, useGetRecipesBySearchQuery } from '../../hooks/useMeals'
+import './home.css'
 
-function Home() {
-  const [category, setCategory] = useState("Beef")
-  const [ fetchType, setFetchType ] = useState("category")
-  const { resultSearch } = useOutletContext()
-  const resultCategory = useGetRecipesByCategoryQuery(category)
-  
-  useEffect(()=>{
-    setFetchType("search")
-  }, [resultSearch])
-  
-  useEffect(()=>{
-    setFetchType("category")
-  }, [category])
-
+export default function Home() {
+  const [category, setCategory] = useState('Beef')
+  const { search, setSearch } = useOutletContext()
+  const term = search.trim()
+  const resultSearch = useGetRecipesBySearchQuery(term, !!term)
+  const resultCategory = useGetRecipesByCategoryQuery(category, !term)
+  const changeCategory = (value) => { setCategory(value); setSearch('') }
   return (
-    <>
-      <section>
-        <Categories categoryProp={category} setCategory={setCategory} /> 
-        <Recipes category={category} result={fetchType === "category" ? resultCategory : resultSearch} />
-      </section>
-    </>
+    <section>
+      <Categories categoryProp={term ? '' : category} setCategory={changeCategory} />
+      <Recipes result={term ? resultSearch : resultCategory} />
+    </section>
   )
 }
-
-export default Home

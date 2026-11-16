@@ -1,24 +1,10 @@
-import RecipeCard from "./RecipeCard"
-import "./recipes.css"
+import RecipeCard from './RecipeCard'
+import './recipes.css'
 
-const Recipes = ({result}) => {   
-    return result ? 
-     (
-        <div id="recipes">
-            {result.data ?
-                result.data.meals !== null && result.data.meals.length > 0 ?
-                    result.data?.meals.map((recipe)=>(
-                        <RecipeCard recipe={recipe} key={recipe.idMeal} />
-                    ))
-                : "Aucun résultat trouvé"
-            : result.isLoading ?
-                "Loading..."
-            : result.isError ?
-                "Error"
-            : null
-            }
-        </div>
-    ) : <></>
+export default function Recipes({ result }) {
+  if (result.isLoading) return <p role="status">Chargement des recettes...</p>
+  if (result.isError) return <p role="alert">{result.error.message}</p>
+  const meals = result.data?.meals ?? []
+  if (!meals.length) return <p>Aucune recette trouvée.</p>
+  return <div id="recipes">{meals.map((recipe) => <RecipeCard recipe={recipe} key={recipe.idMeal} />)}</div>
 }
-
-export default Recipes

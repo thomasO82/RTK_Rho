@@ -1,9 +1,8 @@
-const Searchbar = ({search, setSearch}) => {
+export default function Searchbar({ search, setSearch }) {
   return (
-    <form>
-        <input type="text" placeholder="Rechercher une recette" value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+    <form onSubmit={(event) => event.preventDefault()} role="search">
+      <input aria-label="Rechercher une recette" type="search" placeholder="Rechercher une recette"
+        value={search} onChange={(event) => setSearch(event.target.value)} />
     </form>
   )
 }
-
-export default Searchbar
