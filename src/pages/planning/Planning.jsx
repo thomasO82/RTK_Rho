@@ -6,7 +6,12 @@ export default function Planning() {
     <section className="fullCalendarContainer">
       <h2>Planning</h2>
       <p>La planification sera disponible au TD2.</p>
-      <FullCalendar plugins={[dayGridPlugin]} events={[]} initialView="dayGridMonth" height="auto" />
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        events={[]}
+        initialView="dayGridMonth"
+        height="auto"
+      />
     </section>
   )
 }

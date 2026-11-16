@@ -5,6 +5,14 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
+  {
+    files: ['src/**/*.{js,jsx}'],
+    rules: {
+      'arrow-body-style': ['error', 'always'],
+      curly: ['error', 'all'],
+      'brace-style': ['error', '1tbs', { allowSingleLine: false }],
+    },
+  },
   { ignores: ['dist', '.tmp'] },
   { files: ['tests/**/*.js'], languageOptions: { globals: globals.node } },
   {

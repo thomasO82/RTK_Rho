@@ -4,29 +4,55 @@ import Recipe from '../../components/Recipe/Recipe'
 import { useEffect, useState } from 'react'
 import { getRecipeById } from '../../services/theMealDbApi'
 import './recipeDetails.css'
-
 export default function RecipeDetails() {
   const { idRecipe } = useParams()
   const { toggle, handleToggle } = useToggle(false)
-  const [result, setResult] = useState({ isLoading: true })
+  const [result, setResult] = useState({
+    isLoading: true,
+  })
   useEffect(() => {
     let active = true
     async function loadRecipe() {
-      setResult({ isLoading: true })
+      setResult({
+        isLoading: true,
+      })
       try {
         const data = await getRecipeById(idRecipe)
-        if (active) setResult({ data })
+        if (active) {
+          setResult({
+            data,
+          })
+        }
       } catch (error) {
-        if (active) setResult({ error, isError: true })
+        if (active) {
+          setResult({
+            error,
+            isError: true,
+          })
+        }
       }
     }
     loadRecipe()
-    return () => { active = false }
+    return () => {
+      active = false
+    }
   }, [idRecipe])
-  if (result.isLoading) return <p role="status">Chargement de la recette...</p>
-  if (result.isError) return <p role="alert">{result.error.message}</p>
+  if (result.isLoading) {
+    return (
+      <p role="status">Chargement de la recette...</p>
+    )
+  }
+  if (result.isError) {
+    return (
+      <p role="alert">{result.error.message}</p>
+    )
+  }
   const recipe = result.data?.meals?.[0]
-  if (!recipe) return <p>Recette introuvable.</p>
+  if (!recipe) {
+    return (
+      <p>Recette introuvable.</p>
+    )
+  }
   return (
     <Recipe toggle={toggle} handleToggle={handleToggle} recipe={recipe}>
       <div id="recipe">
@@ -34,7 +60,9 @@ export default function RecipeDetails() {
         <aside>
           <Link to="/">{'<'} Retour</Link>
           <h2>{recipe.strMeal}</h2>
-          <button id="openModale" onClick={handleToggle}>+ Ajouter au planning</button>
+          <button id="openModale" onClick={handleToggle}>
+            + Ajouter au planning
+          </button>
           <p>{recipe.strInstructions}</p>
         </aside>
       </div>

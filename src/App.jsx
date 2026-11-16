@@ -5,9 +5,7 @@ import Courses from './pages/courses/Courses'
 import Planning from './pages/planning/Planning'
 import Header from './components/header/Header'
 import RecipeDetails from './pages/Recipe/RecipeDetails'
-
 function App() {
-
   return (
     <Routes>
       <Route element={<Header />}>
@@ -19,5 +17,4 @@ function App() {
     </Routes>
   )
 }
-
 export default App
