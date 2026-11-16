@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Home from './pages/home/Home'
@@ -8,17 +7,12 @@ import Header from './components/header/Header'
 import RecipeDetails from './pages/Recipe/RecipeDetails'
 
 export default function App() {
-  const [search, setSearch] = useState('')
-
   return (
     <>
-      <Header search={search} setSearch={setSearch} />
+      <Header />
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={<Home search={search} setSearch={setSearch} />}
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/planning" element={<Planning />} />
           <Route path="/recipe/:idRecipe" element={<RecipeDetails />} />

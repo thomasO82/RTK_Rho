@@ -81,7 +81,6 @@ input { max-width: 100%; font: inherit; }
 @media (max-width: 600px) {
   header nav { right: 1rem; }
   header nav ul { gap: 1rem; padding: 0; }
-  header form { width: calc(100% - 2rem); }
   main > section #categories { padding: 1rem; border-radius: 1rem; }
   #recipe { flex-direction: column; }
   #recipe > img, #recipe > aside { width: 100%; }

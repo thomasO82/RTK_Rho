@@ -1,10 +1,8 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import headerBg from '../../assets/header_bg.webp'
 import reactLogo from '../../assets/react.svg'
-import Searchbar from './Searchbar/Searchbar'
 import './header.css'
-export default function Header({ search, setSearch }) {
-  const location = useLocation()
+export default function Header() {
   return (
     <header>
       <div>
@@ -17,9 +15,6 @@ export default function Header({ search, setSearch }) {
         R<span>ecipes</span>I7
       </h1>
       <img src={headerBg} alt="" />
-      {location.pathname === '/' && (
-        <Searchbar search={search} setSearch={setSearch} />
-      )}
       <nav>
         <ul>
           <li>

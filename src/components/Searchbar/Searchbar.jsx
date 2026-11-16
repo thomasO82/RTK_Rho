@@ -1,18 +1,21 @@
+import './searchbar.css'
+
 export default function Searchbar({ search, setSearch }) {
   return (
     <form
-      onSubmit={(event) => {
-        return event.preventDefault()
-      }}
+      className="searchbar"
       role="search"
+      onSubmit={(event) => {
+        event.preventDefault()
+      }}
     >
       <input
-        aria-label="Rechercher une recette"
         type="search"
+        aria-label="Rechercher une recette"
         placeholder="Rechercher une recette"
         value={search}
         onChange={(event) => {
-          return setSearch(event.target.value)
+          setSearch(event.target.value)
         }}
       />
     </form>
