@@ -11,31 +11,15 @@ export default function RecipeDetails() {
     isLoading: true,
   })
   useEffect(() => {
-    let active = true
-    async function loadRecipe() {
-      setResult({
-        isLoading: true,
+    setResult({ isLoading: true })
+
+    getRecipeById(idRecipe)
+      .then((data) => {
+        setResult({ data })
       })
-      try {
-        const data = await getRecipeById(idRecipe)
-        if (active) {
-          setResult({
-            data,
-          })
-        }
-      } catch (error) {
-        if (active) {
-          setResult({
-            error,
-            isError: true,
-          })
-        }
-      }
-    }
-    loadRecipe()
-    return () => {
-      active = false
-    }
+      .catch((error) => {
+        setResult({ error, isError: true })
+      })
   }, [idRecipe])
   if (result.isLoading) {
     return (

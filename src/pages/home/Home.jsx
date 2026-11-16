@@ -15,33 +15,19 @@ export default function Home() {
   const { search, setSearch } = useOutletContext()
   const term = search.trim()
   useEffect(() => {
-    let active = true
-    async function loadRecipes() {
-      setResult({
-        isLoading: true,
+    setResult({ isLoading: true })
+
+    const request = term
+      ? getRecipesBySearch(term)
+      : getRecipesByCategory(category)
+
+    request
+      .then((data) => {
+        setResult({ data })
       })
-      try {
-        const data = term
-          ? await getRecipesBySearch(term)
-          : await getRecipesByCategory(category)
-        if (active) {
-          setResult({
-            data,
-          })
-        }
-      } catch (error) {
-        if (active) {
-          setResult({
-            error,
-            isError: true,
-          })
-        }
-      }
-    }
-    loadRecipes()
-    return () => {
-      active = false
-    }
+      .catch((error) => {
+        setResult({ error, isError: true })
+      })
   }, [term, category])
   const changeCategory = (value) => {
     setCategory(value)

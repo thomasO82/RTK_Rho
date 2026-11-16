@@ -16,7 +16,7 @@ Chaque branche reprend la précédente. Pour changer : `git switch td1-vues`, pu
 
 La modale propose une date, mais la validation est volontairement désactivée jusqu'au TD2.
 Les vues Courses et Planning sont préparées pour l'étape suivante.
-Les lectures Axios gèrent chargement, erreur, résultat vide et réponses obsolètes ignorées.
+Les lectures Axios gèrent chargement, erreur, résultat vide.
 Composants limités à 50 lignes ; composants et styles existants conservés ou adaptés.
 
 ## Commandes
